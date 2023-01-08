@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}
+  cassa
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-4">
+                <h2><p class="text-center">MATRICOLA-{{ current_user.matricola }}</p></h2>
+                <p class="text-center">Nuovo Scontrino</p>
+                <p class="text-center">{{ datetime.strftime('%d-%m-%Y %H:%M') }}</p>
+                <p class="text-center"><u>SCONTRINO</u></p>
+                <table class="table table-sm">
+                  <tbody>
+                    {% for item in items_purchased %}
+                        <tr>
+                          <td>{{ item.name }}</td>
+                          <td>{{ item.barcode }}</td>
+                          <td>{{ item.price }}</td>
+                        </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                <div>
+                    <form method="POST">
+                        {{ new_receipt_form.hidden_tag() }}
+                        <div></div>
+                        {{ new_receipt_form.submit(class="btn btn-primary btn-block") }}
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-8">
+
+                <form method="POST" class>
+                    {{ purchase_form.hidden_tag() }}
+                    <div class="form-group">
+                        {{ purchase_form.barcode.label(class="d-flex justify-content-center") }}
+                        {{ purchase_form.barcode(class="form-control") }}
+                    </div>
+                    <br>
+                    {{ purchase_form.submit(class="btn btn-success") }}
+
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
